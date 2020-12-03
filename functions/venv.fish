@@ -1,6 +1,7 @@
 function venv --description 'Create virtualenv named the same as current directory' --argument-names python_version name
   set -l python_bin
   set -l venv_name
+  set -l venv_dir $HOME/.local/share/virtualenvs
 
   if not test -n "$python_version"
     # Use default python version set by asdf
@@ -15,13 +16,12 @@ function venv --description 'Create virtualenv named the same as current directo
     set venv_name $name
   end
 
-  echo
   if not test -e $python_bin
     echo "Python version `$python_version` is not installed."
     return 1
   end
 
-  echo Creating virtualenv `$venv_name version $python_version`
-  $python_bin -m venv $HOME/.virtualenvs/$venv_name
-  source $HOME/.virtualenvs/$venv_name/bin/activate.fish
+  echo Creating virtualenv $venv_name ...
+  $python_bin -m venv $venv_dir/$venv_name
+  source $venv_dir/$venv_name/bin/activate.fish
 end
