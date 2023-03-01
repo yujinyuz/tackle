@@ -3,7 +3,7 @@ function zg --description 'Jumps to parent git repo'
     if test -d $d/.git
         return
     end
-    while test $d != "/"
+    while test $d != /
         if test -d $d/.git
             cd $d
             return
