@@ -1,6 +1,5 @@
-# by @farcaller from https://github.com/fish-shell/fish-shell/issues/825#issuecomment-440286038
-
-function up-or-search -d "Depending on cursor position and current mode, either search backward or move up one line"
+# Depending on cursor position and current mode, either search backward or move up one line"
+function up-or-search -d "Search back or move cursor up 1 line"
     # If we are already in search mode, continue
     if commandline --search-mode
         commandline -f history-search-backward
@@ -16,7 +15,7 @@ function up-or-search -d "Depending on cursor position and current mode, either 
     # We are not already in search mode.
     # If we are on the top line, start search mode,
     # otherwise move up
-    set lineno (commandline -L)
+    set -l lineno (commandline -L)
 
     switch $lineno
         case 1
@@ -27,3 +26,4 @@ function up-or-search -d "Depending on cursor position and current mode, either 
             commandline -f up-line
     end
 end
+# Source: @farcaller from https://github.com/fish-shell/fish-shell/issues/825#issuecomment-440286038
