@@ -8,24 +8,25 @@ function killport --description "Kill process(es) with the given port"
 
 
     set port $argv[1]
-    set pid (lsof -i tcp:$port -t)
+    set pids (lsof -i tcp:$port -t)
 
 
-    if test -z "$pid"
+    if test -z "$pids"
         echo "No program is running on port $port"
         return 1
     end
 
 
-    echo "Program running on port $port:"
-    ps -p $pid -o comm=
-    echo "Do you want to kill this program? (y/n)"
-    read confirmation
+    echo "Program(s) running on port $port:"
+    for pid in $pids
+        ps -p $pid -o comm=
+        echo "Do you want to kill this program? (y/n)"
+        read -P "> " confirmation
 
-    if test "$confirmation" = y
-        kill -9 $pid
-        echo "Successfully killed program"
-        return 0
+        if test "$confirmation" = y
+            kill -9 $pid
+            echo "Successfully killed program"
+        end
     end
 
     return 0
